@@ -1,0 +1,21 @@
+.card-tile {
+    height: 23px;
+    
+    margin-bottom: 2px;
+    border-bottom: 1px solid teal;
+}
+
+.image-card {
+    background-image: url('http://localhost:5000/static/myRowArt/3/33.png');
+    background-size: contain;
+    background-repeat: no-repeat;
+    width: 100%;
+    align-items: center;
+    float: right;
+    background-position:right;
+    text-align: right;
+}
+
+.card-text {
+    overflow: hidden;
+}

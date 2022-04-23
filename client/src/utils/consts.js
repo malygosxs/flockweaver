@@ -1,0 +1,5 @@
+export const ADMIN_ROUTE = '/admin'
+export const DECKVIEW_ROUTE = '/deckview'
+export const LOGIN_ROUTE = '/login'
+export const REGISTRATION_ROUTE = '/registration'
+export const DECKVIEWPREVIEW_ROUTE = '/deckview'
