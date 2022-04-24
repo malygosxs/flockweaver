@@ -13,7 +13,7 @@ export const authRoutes = [
 
 export const publicRoutes = [
     {
-        path: DECKVIEW_ROUTE + '/:id',
+        path: DECKVIEW_ROUTE + '/:uuid',
         Component: DeckView
     },
     {

@@ -2,11 +2,10 @@ const bs58 = require('bs58')
 const { Op } = require('sequelize')
 const short = require('short-uuid')
 const { Card, CardTranslation, Prism, ClassCode, LineUp } = require('../models/models')
-const { decode } = require('../services/shortURL')
 const { isBigEndian, SW_PREFIX_LEN, CLASS_LEN, VERSION_LEN, SW_DECK_SIZE, VERSION, SW_PREFIX } = require('../utils/consts')
 
 class DecodeController {
-    async decodeDeckstring(deckstring) {
+    decodeDeckstring = async (deckstring) => {
 
         const language = 'en'
 
@@ -41,7 +40,7 @@ class DecodeController {
 
 
 
-        return { cards, classCode, error: '' }
+        return { cards, classCode }
     }
 
     validateDeck = async (deckstring) => {
@@ -85,17 +84,17 @@ class DecodeController {
         if (codes === undefined) {
             return res.status(400).json('Codes are required!')
         }
-        const response = await Promise.all(codes.map((el) => this.validateDeck(el)))
+        await Promise.all(codes.map((el) => this.validateDeck(el)))
             .then(resp => {
                 if (resp.every(x => x instanceof Object)) {
-                    
-                    
+
+
 
                     const classCode = resp.map(obj => obj.code);
                     resp.fill('')
                     console.log(classCode);
                     const duplicateIndex = firstDuplicateIndex(classCode)
-                    
+
                     if (duplicateIndex !== -1) {
                         resp[duplicateIndex] = 'Duplicate class'
                     }
@@ -118,18 +117,35 @@ class DecodeController {
     async createNewUrl(req, res) {
         const codes = req.body;
         const concatString = codes.join('.')
-        const uuid = short.generate();
+        const uuid = short.generate()
         await LineUp.create({
             uuid,
             private: false,
             concatString
         })
         return res.json(uuid)
-    } 
+    }
+
+    decodeDecks = async (req, res) => {
+        const { url } = req.query
+        const lineup = await LineUp.findOne({ where: { uuid: url } })
+        if (!lineup) {
+            return res.status(404).json('No decks for this URL')
+        }
+        const { concatString } = lineup
+        const codes = concatString.split('.');
+        try {
+            await Promise.all(codes.map((el) => this.decodeDeckstring(el)))
+                .then(resp => res.json(resp))
+        }
+        catch (e) {
+            res.status(500).json({ message: e.message })
+        }
+    }
 }
 
 function firstDuplicateIndex(arr) {
-    for (let i=0;i<arr.length;i++) {
+    for (let i = 0; i < arr.length; i++) {
         if (arr.indexOf(arr[i]) !== i) {
             return i;
         }

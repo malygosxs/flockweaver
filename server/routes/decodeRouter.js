@@ -6,5 +6,6 @@ const router = new Router()
 router.get('/deck', decodeController.decodeDeckstring)
 router.get('/validate', decodeController.validateDecks)
 router.post('/newuuid', decodeController.createNewUrl)
+router.get('/decks', decodeController.decodeDecks)
 
 module.exports = router
