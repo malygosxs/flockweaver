@@ -130,4 +130,4 @@ dist
 .pnp.*
 
 #static
-server/static
+static/

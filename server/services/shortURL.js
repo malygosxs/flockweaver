@@ -22,6 +22,10 @@ class ShortURL {
 		}
 		return num;
 	};
+
+	encodeWithCheckSum = num => {
+		return this.encode(num) + this.encode((num ** 2) % (this._base ** 2))
+	}
 }
 
 module.exports = new ShortURL()

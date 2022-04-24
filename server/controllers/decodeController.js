@@ -1,6 +1,7 @@
 const bs58 = require('bs58')
 const { Op } = require('sequelize')
-const { Card, CardTranslation, Prism, ClassCode } = require('../models/models')
+const short = require('short-uuid')
+const { Card, CardTranslation, Prism, ClassCode, LineUp } = require('../models/models')
 const { decode } = require('../services/shortURL')
 const { isBigEndian, SW_PREFIX_LEN, CLASS_LEN, VERSION_LEN, SW_DECK_SIZE, VERSION, SW_PREFIX } = require('../utils/consts')
 
@@ -116,8 +117,14 @@ class DecodeController {
 
     async createNewUrl(req, res) {
         const codes = req.body;
-        //TODO: create new row db, shortURL, return to client
-        return res.json('ok')
+        const concatString = codes.join('.')
+        const uuid = short.generate();
+        await LineUp.create({
+            uuid,
+            private: false,
+            concatString
+        })
+        return res.json(uuid)
     } 
 }
 

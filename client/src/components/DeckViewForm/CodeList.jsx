@@ -1,4 +1,5 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { Form, Button } from 'react-bootstrap'
 import './codeList.css'
 import { createUuid, validateCodes } from "../../http/deckviewAPI";
@@ -6,6 +7,7 @@ import { createUuid, validateCodes } from "../../http/deckviewAPI";
 function Codelist({ count = 3, lng = 'en', isFullDecks = true }) {
     const [codes, setCodes] = useState([])
     const [errors, setErrors] = useState([])
+    const history = useNavigate()
 
     function handleChange(i, e) {
         const newCodes = [...codes];
@@ -21,7 +23,7 @@ function Codelist({ count = 3, lng = 'en', isFullDecks = true }) {
             return
         }
         const newUrl = await createUuid(codes);
-        console.log(newUrl);
+        history(newUrl)
     }
 
     return (
