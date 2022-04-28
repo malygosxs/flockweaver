@@ -2,12 +2,13 @@ const bs58 = require('bs58')
 const { Op } = require('sequelize')
 const short = require('short-uuid')
 const { Card, CardTranslation, Prism, ClassCode, LineUp } = require('../models/models')
-const { isBigEndian, SW_PREFIX_LEN, CLASS_LEN, VERSION_LEN, SW_DECK_SIZE, VERSION, SW_PREFIX } = require('../utils/consts')
+const { isBigEndian, SW_PREFIX_LEN, CLASS_LEN, VERSION_LEN, VERSION, SW_PREFIX } = require('../utils/consts')
 
 class DecodeController {
     decodeDeckstring = async (deckstring) => {
 
         const language = 'en'
+        const isFullDecks = true;
 
         if (deckstring.length < SW_PREFIX_LEN + CLASS_LEN + VERSION_LEN) {
             throw new Error('Invalid deckstring length')
@@ -26,6 +27,8 @@ class DecodeController {
 
         const [numbers, cards] = await parseNumbers(deckstring, language, classCode)
 
+        const deckSize = classCode.prism1 === classCode.prism2 ? 25 : 30
+
         if (cards === null) {
             throw new Error('Invalid deckstring')
         }
@@ -34,7 +37,7 @@ class DecodeController {
             throw new Error('Deckstring is not valid') //error handler
         }
 
-        if (cards.length !== SW_DECK_SIZE && isFullDecks) {
+        if (cards.length !== deckSize && isFullDecks) {
             throw new Error('Deckstring contains not a full deck')
         }
 
@@ -45,6 +48,7 @@ class DecodeController {
 
     validateDeck = async (deckstring) => {
         const language = 'en'
+        const isFullDecks = true;
 
         if (deckstring.length < SW_PREFIX_LEN + CLASS_LEN + VERSION_LEN) {
             return 'Invalid deckstring length'
@@ -63,6 +67,8 @@ class DecodeController {
 
         const [numbers, cards] = await parseNumbers(deckstring, language, classCode)
 
+        const deckSize = classCode.prism1 === classCode.prism2 ? 25 : 30
+
         if (cards === null) {
             return 'Invalid deckstring'
         }
@@ -71,7 +77,7 @@ class DecodeController {
             return 'Deckstring is not valid' //error handler
         }
 
-        if (cards.length !== SW_DECK_SIZE && isFullDecks) {
+        if (cards.length !== deckSize && isFullDecks) {
             return 'Deckstring contains not a full deck'
         }
 
@@ -83,6 +89,9 @@ class DecodeController {
         const { codes } = req.query
         if (codes === undefined) {
             return res.status(400).json('Codes are required!')
+        }
+        if (codes.length > 5) {
+            return res.status(404).json('Expected less decks!')
         }
         await Promise.all(codes.map((el) => this.validateDeck(el)))
             .then(resp => {
@@ -204,7 +213,7 @@ async function parseNumbers(deckstring, lng, classCode) {
 }
 
 async function parseClass(deckString) {
-    try {
+    //try {
         const clazz = deckString.substr(SW_PREFIX_LEN, CLASS_LEN)
         const classCode = await ClassCode.findOne({
             where: {
@@ -212,10 +221,10 @@ async function parseClass(deckString) {
             }
         })
         return classCode
-    }
-    catch (e) {
-        return null
-    }
+    //}
+    //catch (e) {
+    //    return null
+    //}
 }
 
 function parseVersion(deckString) {

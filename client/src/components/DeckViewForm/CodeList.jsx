@@ -4,7 +4,7 @@ import { Form, Button } from 'react-bootstrap'
 import './codeList.css'
 import { createUuid, validateCodes } from "../../http/deckviewAPI";
 
-function Codelist({ count = 3, lng = 'en', isFullDecks = true }) {
+function Codelist({ count = 3, lng = 'en', full = true }) {
     const [codes, setCodes] = useState([])
     const [errors, setErrors] = useState([])
     const history = useNavigate()
@@ -23,6 +23,7 @@ function Codelist({ count = 3, lng = 'en', isFullDecks = true }) {
             return
         }
         const newUrl = await createUuid(codes);
+        //TODO: IMPORTANT: createUuid inside another function!!
         history(newUrl)
     }
 

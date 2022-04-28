@@ -23,7 +23,7 @@ const NavBar = observer(() => {
                     >
                         <NavLink className='text-decoration-none text-white-50' to={DECKVIEW_ROUTE}>Deckview</NavLink>
                     </Nav>
-                    <Nav>
+                    {/* <Nav>
                         {user.isAuth ?
                             <Button variant="outline-primary" >Log out</Button>
                             :
@@ -35,7 +35,7 @@ const NavBar = observer(() => {
                             </Button>
 
                         }
-                    </Nav>
+                    </Nav> */}
                 </Navbar.Collapse>
             </Container>
         </Navbar>

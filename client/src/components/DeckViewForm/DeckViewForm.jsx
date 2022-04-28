@@ -35,6 +35,7 @@ const DeckViewForm = () => {
                 <Form.Check 
                 type="checkbox" 
                 label="full decks only" 
+                defaultChecked="true"
                 value={isFull}
                 onChange={(e) => {setIsFull(e.target.value)}}
                  />

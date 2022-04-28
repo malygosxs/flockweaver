@@ -1,21 +1,28 @@
 .card-tile {
     height: 23px;
-    
+    position: relative  ;
     margin-bottom: 2px;
     border-bottom: 1px solid teal;
 }
 
 .image-card {
-    background-image: url('http://localhost:5000/static/myRowArt/3/33.png');
+    /* background-image: url('http://localhost:5000/static/myRowArt/3/33.png'); */
     background-size: contain;
     background-repeat: no-repeat;
     width: 100%;
     align-items: center;
     float: right;
-    background-position:right;
+    background-position: right;
     text-align: right;
+    /* position: absolute; */
+    /* mask-image: linear-gradient(to left, rgba(0, 0, 0, 1) 40%, rgba(0, 0, 0, 0)); */
 }
 
 .card-text {
-    overflow: hidden;
+    white-space: nowrap;
+    z-index: 1;
+    text-shadow: 1px 1px #000;
+    /* font-size: small; */
+    display: flex;
+    align-items: center;
 }

@@ -11,8 +11,12 @@ async function createCardById(id) {
         const res = await axios.get(url)
         const cardData = res.data
         const [description, flavorText] = cardData.description.split('\n\n')
-
-        const [name] = cardData.name.split(' ')
+        const indexSubstr = cardData.name.indexOf('(Silver)')
+        let name = cardData.name.trim()
+        if (indexSubstr !== -1) {
+            name = cardData.name.substr(0, cardData.name.indexOf('(Silver)')).trim()
+        }
+        
         const mana = cardData.properties.mana === 'X' ? '100' : cardData.properties.mana
 
         const hexCode = await createRowArt(id);
