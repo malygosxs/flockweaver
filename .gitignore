@@ -131,3 +131,6 @@ dist
 
 #static
 static/
+
+#idea
+.idea
