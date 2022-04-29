@@ -7,6 +7,7 @@ router.post('/', /*checkRole('ADMIN'),*/ cardController.create)
 router.post('/bulk', /*checkRole('ADMIN'),*/ cardController.createBulk)
 router.get('/:lng/:id', cardController.getOne)
 router.get('/', cardController.getAll)
+router.put('/', cardController.updateBulkById)
 
 
 module.exports = router

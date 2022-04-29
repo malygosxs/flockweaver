@@ -11,13 +11,23 @@ const DeckView = observer(() => {
     const { decks } = useContext(Context)
 
     useEffect(() => {
-        getCards(uuid).then(data => decks.setDecks(data))
+        getCards(uuid).then(data => {
+            decks.setDecks(data)
+            const title = decks.decks.map(x => x.classInfo.name).join('/')
+            document.title = title;
+        })
     }, [])
+    
 
     return (
         <div className='d-flex flex-wrap justify-content-start p-4'>
             {decks.decks.map(deck =>
-                <Deck key={deck.classCode.code} deck={deck.cards} classw={deck.classCode}/>
+                <Deck
+                    key={deck.classInfo.code}
+                    deck={deck.cards}
+                    classw={deck.classInfo}
+                    deckstring={deck.deckstring}
+                />
             )}
         </div>
     );

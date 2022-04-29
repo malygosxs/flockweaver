@@ -66,7 +66,7 @@ const CardKeyword = sequelize.define('card_keywords', {
 
 }, {timestamps: false})
 
-const ClassCode = sequelize.define('class_code', {
+const ClassInfo = sequelize.define('class_info', {
     name: {type: DataTypes.STRING},
     code: {type: DataTypes.STRING, primaryKey: true},
     prism1: {type: DataTypes.STRING},
@@ -113,5 +113,5 @@ CardTranslation.belongsTo(Card);
 module.exports = {
     Card, Enchant, Expansion, Element, Prism,
     Keyword, CardElement, CardKeyword, CardPrism, CardTranslation,
-    ClassCode, User, LineUp
+    ClassInfo, User, LineUp
 }

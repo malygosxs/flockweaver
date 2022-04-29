@@ -1,28 +1,344 @@
-.card-tile {
-    height: 23px;
-    position: relative  ;
-    margin-bottom: 2px;
-    border-bottom: 1px solid teal;
-}
-
-.image-card {
-    /* background-image: url('http://localhost:5000/static/myRowArt/3/33.png'); */
-    background-size: contain;
-    background-repeat: no-repeat;
-    width: 100%;
-    align-items: center;
-    float: right;
-    background-position: right;
-    text-align: right;
-    /* position: absolute; */
-    /* mask-image: linear-gradient(to left, rgba(0, 0, 0, 1) 40%, rgba(0, 0, 0, 0)); */
-}
-
-.card-text {
+/* This file is for your main application css. */
+.multi-select-text {
     white-space: nowrap;
-    z-index: 1;
-    text-shadow: 1px 1px #000;
-    /* font-size: small; */
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: block;
+    min-width: 0;
+    max-width: 90%;
+}
+
+.is-text-overflow {
+    flex: 1;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+:root {
+    --color-legendary: rgb(255, 128, 0);
+    --color-dark-basic: rgb(33, 45, 85);
+    --color-dark-common: rgb(99, 99, 99);
+    --color-dark-rare: rgb(36, 62, 88);
+
+    --color-dark-legendary: rgb(99, 68, 27);
+
+    --color-darker-grey: #2b2d2f;
+    --color-decklist-card: #2b2d2f;
+    --color-neutral: var(--color-darker-grey);
+
+    --color-agility: rgb(28, 73, 10);
+    --color-strength: rgb(105, 28, 3);
+    --color-wisdom: rgb(117, 7, 93);
+    --color-heart: rgb(12, 19, 9);
+    --color-intellect: rgb(22, 37, 102);
+
+    --color-twitch: rgb(145, 70, 255);
+
+    --decklist-width: 200px;
+}
+
+.card_tile_fade_box {
+    background: linear-gradient(65deg, #313109, #313131 calc(100% - 120px), rgba(49, 49, 49, 0) calc(100% - 50px), rgba(49, 49, 49, 0));
+}
+
+.decklist_tile_image {
+    /*z-index: -1;*/
+    /*max-height: 45px;*/
+    /*max-width: 200px;*/
+    position: absolute;
+    left: -30%;
+    clip-path: polygon(30% 0%, 90% 0, 90% 100%, 30% 100%);
+    /*clip-path: fill-box inset(0% 9% 21% 35%);*/
+}
+
+.decklist_hero_image {
+    clip-path: polygon(30% 0%, 90% 0, 90% 100%, 30% 100%);
+}
+
+.decklist_card_container {
+    /*max-height: 45px;*/
+    width: var(--decklist-width);
+    /*max-height: 30px;*/
+}
+
+.decklist_card_text_container {
+    color: white;
+    background-color: black;
+    height: 100%;
+    text-align: center;
+}
+
+.decklist_card_text {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+
+}
+
+.decklist_card_count {
+    position: absolute;
+    right: 0;
+    top: 0;
+}
+
+.decklist_card_cost {
+    position: absolute;
+    left: 0;
+    top: 0;
+}
+
+
+.decklist-card {
+    padding: 0;
+    height: 25px;
+    color: white;
+    text-align: center;
     display: flex;
+    border-style: solid;
+    border-width: 1px;
+    border-color: var(--color-border, var(--color-dark-grey));
+    box-sizing: content-box;
+    padding: 1px;
+}
+
+.decklist-card-tile {
+    width: 100%;
+    height: 23px;
+    position: absolute;
+    top: 1px;
+    right: 1px;
+    box-sizing: content-box;
+    background-position: right;
+    background-size: contain;
+    background-origin: content-box;
+    background-clip: content-box;
+    background-attachment: scroll;
+    background-repeat: no-repeat;
+}
+
+.deck-hero {
+    display: flex;
+    color: #dddddd;
     align-items: center;
+    justify-content: center;
+    border: 1px solid #236923;
+    outline: 1px solid #692323;
+}
+
+.decklist-card-background {
+    background: var(--color-gradient);
+}
+
+.decklist-card-gradient {
+    background: -moz-linear-gradient(90deg, var(--color-gradient) 0%, var(--color-gradient) 45%, transparent);
+    background: -webkit-linear-gradient(90deg, var(--color-gradient) 0%, var(--color-gradient) 45%, transparent);
+    background: linear-gradient(90deg, var(--color-gradient) 0%, var(--color-gradient) 45%, transparent);
+}
+
+
+.card-number {
+    width: 15px;
+}
+
+.card-name {
+    width: 180px;
+    flex: auto;
+}
+
+
+.decklist-hero.demonhunter {
+    border-color: var(--color-demonhunter);
+    background-color: var(--color-demonhunter);
+    /*background-image: url("https://d2q63o9r0h0ohi.cloudfront.net/images/deckbuilder/deckbuilder_portrait_demonhunter-74b078df0873e39c69ded4395fe044bec4a0509b7604781a93fba4ffa3de8c79c641e0168002428adef337e0a1038c1fa7862748d0c0dac90afaccea84cc1e99.jpg");*/
+}
+
+.decklist-hero.druid {
+    border-color: var(--color-druid);
+    background-color: var(--color-druid);
+    /*background-image: url("https://d2q63o9r0h0ohi.cloudfront.net/images/deckbuilder/deckbuilder_portrait_druid-f0e01a45d1d78a898f5d8b2c1a5fc6a342c3c250c40fdca0df491e7518b1d7e513b329ff7d317ab87f7a18885edee4f29e94ff0cbccbcf9870c157401b04d79e.jpg");*/
+}
+
+.decklist-hero.hunter {
+    border-color: var(--color-hunter);
+    background-color: var(--color-hunter);
+    /*background-image: url("https://d2q63o9r0h0ohi.cloudfront.net/images/deckbuilder/deckbuilder_portrait_hunter-e035017bdd8257893bca2b2950302847093ea25d85dc7ec29675e46f9c652a773c758dd8b6530b704b7ec1ddf22313595f2e1ba73a41bb2beb178892855673d2.jpg");*/
+}
+
+.decklist-hero.mage {
+    border-color: var(--color-mage);
+    background-color: var(--color-mage);
+    /*background-image: url("https://d2q63o9r0h0ohi.cloudfront.net/images/deckbuilder/deckbuilder_portrait_mage-93b0dbc915e6bb762ea277033e0e2bde6e2b9d4c03af0834dd0190249584fccd3bbfc88665230f5d8276c704a2e04748bd7f1d82d989762d011423070cd95990.jpg");*/
+}
+
+.decklist-hero.paladin {
+    border-color: var(--color-paladin);
+    background-color: var(--color-paladin);
+    /*background-image: url("https://d2q63o9r0h0ohi.cloudfront.net/images/deckbuilder/deckbuilder_portrait_paladin-5f99cf232ff7735649b532948bea213ea92f1ae94de3b7a6589bc32ab1d2cc9274e3a393138e5b15cfb0607da506afd9ef6f7583586d4c819df5c40a2dbb62f1.jpg");*/
+}
+
+.decklist-hero.priest {
+    border-color: var(--color-priest);
+    background-color: var(--color-priest);
+    /*background-image: url("https://d2q63o9r0h0ohi.cloudfront.net/images/deckbuilder/deckbuilder_portrait_priest-d55e5c57179030e2d08128abe234b5db5729a2e9849d74d45b60fb8c31003606bbf9a79189b0ce9b50163cf7e6833a26a2a0f90b6575978c47acd86ffc27c451.jpg");*/
+}
+
+.decklist-hero.shaman {
+    border-color: var(--color-shaman);
+    background-color: var(--color-shaman);
+    /*background-image: url("https://d2q63o9r0h0ohi.cloudfront.net/images/deckbuilder/deckbuilder_portrait_shaman-01f75fe095213b0b89a38c2a77b563c81ca74bca48560039e023a05c88a6c44abaf1334cc78d6afd52f74241296156181a065e3b9f5dbcd8b9bfc57e113469b7.jpg");*/
+}
+
+.decklist-hero.rogue {
+    border-color: var(--color-rogue);
+    background-color: var(--color-rogue);
+    /*background-image: url("https://d2q63o9r0h0ohi.cloudfront.net/images/deckbuilder/deckbuilder_portrait_rogue-79d0c64c2c3e61ae02dafda95936405677b80c3c29e038179a4726279df80e6179f55a10ac486447a379eb7f68299702c26774468ef93aee15179e6787a105a3.jpg");*/
+}
+
+.decklist-hero.warlock {
+    border-color: var(--color-warlock);
+    background-color: var(--color-warlock);
+    /*background-image: url("https://d2q63o9r0h0ohi.cloudfront.net/images/deckbuilder/deckbuilder_portrait_warlock-4b024793cdd1f65a9fad3febb1ae115cf4777d36a9305f8610c5b239568919303a76a8ecc3fbe9f3c96936991c6cea31b887577257a26db58c8b920bc96c6726.jpg");*/
+}
+
+.decklist-hero.warrior {
+    border-color: var(--color-warrior);
+    /*background-image: url("https://d2q63o9r0h0ohi.cloudfront.net/images/deckbuilder/deckbuilder_portrait_warrior-af1e7128db69a0453750626f90f68adb42f8f9013f10238c0c02fd90120fe1c27bb61aa31287c76e2610c974adce762c0e1d1b9620e8c3bc0736a5957c161e53.jpg");*/
+    background-color: var(--color-warrior)
+}
+
+.is-deck-wide {
+    width: var(--decklist-width);
+
+}
+
+.decklist-hero {
+    width: var(--decklist-width);
+    background-repeat: no-repeat;
+    background-size: contain;
+    /*border-width: 10px;*/
+    /*padding-bottom: 10.9%;*/
+    /*padding-bottom: 13%;*/
+}
+
+.deck-text {
+    z-index: 1;
+    text-shadow: 1px 1px #000000;
+    font-size: small;
+    display: flex;
+    white-space: nowrap;
+    align-items: center;
+}
+
+.deck-title {
+    overflow: hidden;
+    text-overflow: clip;
+    width: 145px;
+    text-align: center;
+}
+
+.legend-rank.tag {
+    /*color:  rgb(255, 175, 15);*/
+    color: rgb(238, 224, 133);
+    /*background-color: rgb(255, 140, 0);*/
+    /*background-color: rgb(173, 82, 15);*/
+    background-color: rgb(187, 100, 2);
+}
+
+.is-twitch.tag {
+    background-color: var(--color-twitch);
+
+}
+
+.has-text-twitch {
+    color: var(--color-twitch);
+}
+
+.is-multiline-tag.tag {
+    height: initial;
+    white-space: initial;
+    padding-top: 0.25em;
+    padding-bottom: 0.25em;
+}
+
+.not-in-list {
+    opacity: 0.15;
+}
+
+.card-comparison-count-1 {
+    opacity: 0.69;
+}
+
+.disqualified-player {
+    text-decoration: line-through;
+}
+
+.decklist-card-container {
+    position: relative;
+}
+
+.decklist-card-image {
+    position: absolute;
+    z-index: 10;
+    top: -85px;
+    left: 70px;
+    height: 384px;
+    width: 256px;
+    display: none;
+}
+
+.has-no-pointer-events {
+    pointer-events: none;
+}
+
+.is-clickable {
+    cursor: pointer;
+
+}
+
+.is-shrinkable .level-left,
+.is-shrinkable .level-right {
+    flex-shrink: 1;
+}
+
+.gm-standings-playoff-top {
+    background-color: #55E6C1;
+    color: black;
+}
+
+.gm-standings-playoff {
+    background-color: #58B19F;
+    color: black;
+}
+
+.gm-standings-playoff-bottom {
+    background-color: #9AECDB;
+    color: black;
+}
+
+.gm-standings-boring {
+    background-color: #CAD3C8;
+    color: black;
+}
+
+.gm-standings-relegated {
+    background-color: #FD7272;
+    color: black;
+}
+
+.omni-bar-results {
+    position: relative;
+    z-index: 10;
+}
+
+.container {
+    min-height: calc(100vh - 14.5rem);
+}
+
+.footer {
+    height: 2.5rem;
+}
+
+.svg-container {
+    background-color: lightgray;
 }
