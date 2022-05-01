@@ -7,11 +7,11 @@ const DeckViewForm = () => {
 
     const [ , setSearchParams] = useSearchParams({});
     const [count, setCount] = useState(3);
-    const [isFull, setIsFull] = useState(true);
+    // const [isFull, setIsFull] = useState(true);
 
     const handleSubmit = (event) => {
         event.preventDefault();
-        setSearchParams({count, lng: 'en', full: isFull})
+        setSearchParams({count, lng: 'en'})
     }
 
     return (
@@ -31,7 +31,7 @@ const DeckViewForm = () => {
                     <option>en</option>
                 </Form.Select>
             </Form.Group>
-            <Form.Group className="mb-4">
+            {/* <Form.Group className="mb-4">
                 <Form.Check 
                 type="checkbox" 
                 label="full decks only" 
@@ -39,7 +39,7 @@ const DeckViewForm = () => {
                 value={isFull}
                 onChange={(e) => {setIsFull(e.target.value)}}
                  />
-            </Form.Group>
+            </Form.Group> */}
             <Button variant="primary" type="submit">
                 Submit
             </Button>
