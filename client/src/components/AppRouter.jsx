@@ -5,8 +5,7 @@ import { Context } from '../index';
 import { observer } from 'mobx-react-lite';
 
 const AppRouter = observer(() => {
-    const {user} = useContext(Context)
-    console.log(user.isAuth);
+    const { user } = useContext(Context)
 
     return (
         <Routes>
@@ -20,6 +19,9 @@ const AppRouter = observer(() => {
                 path="*"
                 element={<Navigate to="/deckview" replace />}
             /> */}
+            <Route exact path="/" element={<Navigate to="/deckview" />}>
+                
+            </Route>
         </Routes>
     );
 });

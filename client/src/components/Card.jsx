@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react';
-import './card.css'
 
 const CardFull = ({ card }) => {
     const [rowPath, setRowPath] = useState()

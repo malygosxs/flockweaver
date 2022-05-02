@@ -1,12 +1,11 @@
 import React, { useState } from 'react';
 import { Form, Button } from 'react-bootstrap';
 import { useSearchParams } from 'react-router-dom';
-import './form.css'
 
 const DeckViewForm = () => {
 
     const [ , setSearchParams] = useSearchParams({});
-    const [count, setCount] = useState(3);
+    const [count, setCount] = useState(4);
     // const [isFull, setIsFull] = useState(true);
 
     const handleSubmit = (event) => {

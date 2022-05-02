@@ -6,7 +6,7 @@ import AppRouter from './components/AppRouter';
 import NavBar from './components/NavBar';
 import './styles/bootstrap.min.css';
 import { check } from './http/userAPI';
-
+import './styles/App.css'
 
 const App = observer(() => {
     const {user} = useContext(Context)

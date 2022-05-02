@@ -1,4 +1,4 @@
-import { $host, $authHost } from "./index";
+import { $authHost } from "./index";
 
 export const addCardsById = async (cardsId) => {
     const response = await $authHost.post('api/card/bulk', cardsId)

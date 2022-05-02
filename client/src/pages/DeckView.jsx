@@ -20,7 +20,7 @@ const DeckView = observer(() => {
     
 
     return (
-        <div className='d-flex flex-wrap justify-content-start p-4'>
+        <div className='d-flex flex-wrap justify-content-around p-4'>
             {decks.decks.map(deck =>
                 <Deck
                     key={deck.classInfo.code}

@@ -12,10 +12,10 @@ const DeckViewPreview = () => {
     params.count = parseInt(params.count)
 
     if (!Number.isInteger(params.count)) {
-        params.count = 3
+        params.count = 4
     }
     if (!(params.count >= 1 && params.count <= 5)) {
-        params.count = 3
+        params.count = 4
     }
 
     return (

@@ -1,10 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Form, Button } from 'react-bootstrap'
-import './codeList.css'
 import { createUuid, validateCodes } from "../../http/deckviewAPI";
 
-function Codelist({ count = 3, lng = 'en', full = true }) {
+function Codelist({ count = 4, lng = 'en', full = true }) {
     const [codes, setCodes] = useState([...Array(count)].fill(''))
     const [errors, setErrors] = useState([])
     const history = useNavigate()
@@ -42,7 +41,7 @@ function Codelist({ count = 3, lng = 'en', full = true }) {
                     </Form.Group>
                 )
             }
-            <Button style={{ width: '155px' }} type="submit">{`View deck${count === 1 ? '' : 's'}`}</Button>
+            <Button className='btn-rs' type="submit">{`View deck${count === 1 ? '' : 's'}`}</Button>
         </Form >
     );
 }
