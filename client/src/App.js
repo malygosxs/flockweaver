@@ -16,6 +16,7 @@ const App = observer(() => {
             user.setIsAuth(true)
            
         })
+        .catch(e => console.log('Auth'))
     }, [])
 
     return (

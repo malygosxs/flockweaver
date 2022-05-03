@@ -1,4 +1,4 @@
-const ApiError = require('../error/ApiError')
+const ApiError = require('../error/apiError')
 const bcrypt = require('bcrypt')
 const jwt = require('jsonwebtoken')
 const { User } = require('../models/models')
@@ -21,7 +21,6 @@ class UserController {
         const candidate = await User.findOne({ where: { email } });
         if (candidate) {
             return res.status(404).json({message: 'User with this email is already registered'})
-            return next(ApiError.badRequest('User with this email is already registered'))
         }
         const hashPassword = await bcrypt.hash(password, 6)
         const user = await User.create({
