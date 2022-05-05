@@ -14,9 +14,11 @@ const App = observer(() => {
     useEffect(() => {
         check().then(data => {
             user.setIsAuth(true)
-           
+            if (data.role === 'ADMIN') {
+                user.setIsAdmin(true)
+            }
         })
-        .catch(e => console.log('Auth'))
+        .catch(e => console.log(e))
     }, [])
 
     return (

@@ -10,17 +10,17 @@ module.exports = function (role) {
             
             if (!token) {
                 console.log(token);
-                res.status(401).json({message: 'Not authorizationed'})
+                return res.status(401).json({message: 'Not authorizationed'})
             }
             const decoded = jwt.verify(token, process.env.SECRET_KEY)
             if (decoded.role !== role) {
-                res.status(403).json({message: 'Have no access'})
+                return res.status(403).json({message: 'Have no access'})
             }
             req.user = decoded
             next()
         }
         catch (e) {
-            res.status(401).json({message: 'Not authorizationed'})
+            return res.status(401).json({message: 'Not authorizationed'})
         }
     }
 }

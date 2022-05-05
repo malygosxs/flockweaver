@@ -4,11 +4,15 @@ import DeckViewPreview from "./pages/DeckViewPreview"
 import Login from "./pages/Login"
 import { ADMIN_ROUTE, DECKVIEWPREVIEW_ROUTE, DECKVIEW_ROUTE, LOGIN_ROUTE, REGISTRATION_ROUTE } from "./utils/consts"
 
-export const authRoutes = [
+export const adminRoutes = [
     {
         path: ADMIN_ROUTE,
-        Component: Admin
+        Component: Admin,
     }
+]
+
+export const authRoutes = [
+    
 ]
 
 export const publicRoutes = [
