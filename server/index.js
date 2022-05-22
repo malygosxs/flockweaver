@@ -13,7 +13,7 @@ const app = express();
 app.set('json spaces', 40);
 app.use(cors())
 app.use(express.json());
-app.use('/static', express.static(path.resolve(__dirname,'static')))
+app.use('/asset', express.static(path.resolve(__dirname,'static')))
 app.use(fileUpload({}));
 app.use('/api', router)
 

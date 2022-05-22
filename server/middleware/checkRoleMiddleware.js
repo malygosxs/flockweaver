@@ -9,8 +9,7 @@ module.exports = function (role) {
             const token = req.headers.authorization.split(' ')[1]
             
             if (!token) {
-                console.log(token);
-                return res.status(401).json({message: 'Not authorizationed'})
+                return res.status(401).json({message: 'Not authed'})
             }
             const decoded = jwt.verify(token, process.env.SECRET_KEY)
             if (decoded.role !== role) {
@@ -20,7 +19,7 @@ module.exports = function (role) {
             next()
         }
         catch (e) {
-            return res.status(401).json({message: 'Not authorizationed'})
+            return res.status(401).json({message: 'Not authed'})
         }
     }
 }

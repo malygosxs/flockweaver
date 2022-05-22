@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Form, Button } from 'react-bootstrap';
+import { Helmet } from 'react-helmet';
 import { useSearchParams } from 'react-router-dom';
 
 const DeckViewForm = () => {
@@ -15,6 +16,10 @@ const DeckViewForm = () => {
 
     return (
         <Form className='d-flex flex-column p-4 preform' onSubmit={handleSubmit}>
+            <Helmet>
+                <title>Deckviewer</title>
+                <meta name='description' content='View several skyweaver decks and share with others'></meta>
+            </Helmet>
             <Form.Group className="mb-4">
                 <Form.Label>Amount of decks (between 1 and 5)</Form.Label>
                 <Form.Control type='number'

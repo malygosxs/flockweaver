@@ -179,15 +179,6 @@
     background-color: rgb(187, 100, 2);
 }
 
-.is-twitch.tag {
-    background-color: var(--color-twitch);
-
-}
-
-.has-text-twitch {
-    color: var(--color-twitch);
-}
-
 .is-multiline-tag.tag {
     height: initial;
     white-space: initial;
@@ -199,14 +190,6 @@
     opacity: 0.15;
 }
 
-.card-comparison-count-1 {
-    opacity: 0.69;
-}
-
-.disqualified-player {
-    text-decoration: line-through;
-}
-
 .decklist-card-container {
     position: relative;
 }
@@ -214,11 +197,12 @@
 .decklist-card-image {
     position: absolute;
     z-index: 10;
-    top: -85px;
-    left: 70px;
-    height: 384px;
-    width: 256px;
+    top: -45px;
+    left: 90px;
+    height: 266px;
+    width: 173px;
     display: none;
+    background-repeat: no-repeat;
 }
 
 .has-no-pointer-events {
