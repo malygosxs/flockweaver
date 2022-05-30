@@ -12,7 +12,7 @@ const Deck = ({ deck, classw, deckstring }) => {
     }
 
     return (
-        <div className='p-2'>
+        <div className='d-flex p-2'>
             <div className='p-2 card'>
                 <div className='d-flex'>
                     <div className='d-flex' style={{ flexGrow: 1 }}>
@@ -22,7 +22,9 @@ const Deck = ({ deck, classw, deckstring }) => {
                     </div>
                     <div className='deck-hero' style={{
                         width: '165px',
-                        background: `linear-gradient(90deg, var(--color-${classw.prism1.toLowerCase()}) 0%, var(--color-${classw.prism2.toLowerCase()}) 100%)`
+                        background: `linear-gradient(90deg, var(--color-${classw.prism1.toLowerCase()}) 0%, var(--color-${classw.prism2.toLowerCase()}) 100%)`,
+                        border: `1px solid var(--color-${classw.prism1.toLowerCase()}-dark)`,
+                        outline: `1px solid var(--color-${classw.prism2.toLowerCase()}-dark)`
                     }}>
                         {classw.name}
                     </div>

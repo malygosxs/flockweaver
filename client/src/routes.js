@@ -1,6 +1,7 @@
 import Admin from "./pages/Admin"
 import DeckView from "./pages/DeckView"
 import DeckViewPreview from "./pages/DeckViewPreview"
+import Home from "./pages/Home"
 import Login from "./pages/Login"
 import { ADMIN_ROUTE, DECKVIEWPREVIEW_ROUTE, DECKVIEW_ROUTE, LOGIN_ROUTE, REGISTRATION_ROUTE } from "./utils/consts"
 
@@ -16,6 +17,10 @@ export const authRoutes = [
 ]
 
 export const publicRoutes = [
+    {
+        path: '/',
+        Component: Home
+    },
     {
         path: DECKVIEW_ROUTE + '/:uuid',
         Component: DeckView

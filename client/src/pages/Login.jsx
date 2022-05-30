@@ -21,7 +21,6 @@ const Login = () => {
         }
         user.setUser(user)
         user.setIsAuth(true)
-        console.log(user.user);
     }
 
     return (

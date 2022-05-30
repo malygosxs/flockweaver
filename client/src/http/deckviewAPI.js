@@ -16,3 +16,8 @@ export const getCards = async (url) => {
     const response = await $host.get('api/decode/decks', {params: {url}})
     return response.data
 }
+
+export const getDeck = async (deckstring) => {
+    const response = await $host.get('api/decode/deck', {params: {deckstring}})
+    return response.data
+}

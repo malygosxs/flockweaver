@@ -18,7 +18,7 @@ const App = observer(() => {
                 user.setIsAdmin(true)
             }
         })
-        .catch(e => console.log(e))
+        .catch(e => console.log('Not authed'))
     }, [])
 
     return (

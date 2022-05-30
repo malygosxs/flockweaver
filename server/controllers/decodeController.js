@@ -1,89 +1,23 @@
 const bs58 = require('bs58')
-const { Op } = require('sequelize')
+const sequelize = require('sequelize')
 const short = require('short-uuid')
-const { Card, CardTranslation, Prism, ClassInfo, LineUp } = require('../models/models')
+const DecodeService = require('../services/decodeService')
+const { Card, CardTranslation, Prism, ClassInfo, LineUp, Deck } = require('../models/models')
 const { isBigEndian, SW_PREFIX_LEN, CLASS_LEN, VERSION_LEN, VERSION, SW_PREFIX } = require('../utils/consts')
 
 class DecodeController {
-    decodeDeckstring = async (deckstring) => {
 
-        const language = 'en'
-        const isFullDecks = true;
-
-        if (deckstring.length < SW_PREFIX_LEN + CLASS_LEN + VERSION_LEN) {
-            throw new Error('Invalid deckstring length')
+    decodeDeckstring = async (req, res) => {
+        try {
+            const { deckstring } = req.query
+            const data = await DecodeService.decodeDeckstring(deckstring)
+            return res.json(data);
         }
-
-
-        const classInfo = await parseClass(deckstring)
-        if (classInfo === null) {
-            throw new Error('Invalid code, could not parse class')
+        catch (e) {
+            return res.status(500).json('Something went wrong!')
         }
-
-        const version = await parseVersion(deckstring)
-        if (version === null) {
-            throw new Error('Invalid code, could not parse version')
-        }
-
-        const [numbers, cards] = await parseNumbers(deckstring, language, classInfo)
-
-        const deckSize = classInfo.prism1 === classInfo.prism2 ? 25 : 30
-
-        if (cards === null) {
-            throw new Error('Invalid deckstring')
-        }
-
-        if (cards.length !== numbers.length) {
-            throw new Error('Deckstring is not valid') //error handler
-        }
-
-        if (cards.length !== deckSize && isFullDecks) {
-            throw new Error('Deckstring contains not a full deck')
-        }
-
-
-
-        return { cards, classInfo, deckstring }
     }
-
-    validateDeck = async (deckstring) => {
-        const language = 'en'
-        const isFullDecks = true;
-
-        if (deckstring.length < SW_PREFIX_LEN + CLASS_LEN + VERSION_LEN) {
-            return 'Invalid deckstring length'
-        }
-
-
-        const classInfo = await parseClass(deckstring)
-        if (classInfo === null) {
-            return 'Invalid code, could not parse class'
-        }
-
-        const version = await parseVersion(deckstring)
-        if (version === null) {
-            return 'Invalid code, could not parse version'
-        }
-
-        const [numbers, cards] = await parseNumbers(deckstring, language, classInfo)
-
-        const deckSize = classInfo.prism1 === classInfo.prism2 ? 25 : 30
-
-        if (cards === null) {
-            return 'Invalid deckstring'
-        }
-
-        if (cards.length !== numbers.length) {
-            return 'Deckstring is not valid' //error handler
-        }
-
-        if (cards.length !== deckSize && isFullDecks) {
-            return 'Deckstring contains not a full deck'
-        }
-
-        return classInfo
-    }
-
+    
     //TODO: checkpoint, allow duplicate
     validateDecks = async (req, res) => {
         try {
@@ -94,7 +28,7 @@ class DecodeController {
             if (codes.length > 5) {
                 return res.status(404).json('Expected less decks!')
             }
-            await Promise.all(codes.map((el) => this.validateDeck(el)))
+            await Promise.all(codes.map((el) => DecodeService.validateDeck(el)))
                 .then(resp => {
                     if (resp.every(x => x instanceof Object)) {
 
@@ -102,7 +36,6 @@ class DecodeController {
 
                         const classInfo = resp.map(obj => obj.code);
                         resp.fill('')
-                        console.log(classInfo);
                         const duplicateIndex = firstDuplicateIndex(classInfo)
 
                         if (duplicateIndex !== -1) {
@@ -118,8 +51,6 @@ class DecodeController {
                             return el;
                         })
                     }
-
-                    console.log(resp);
                     return res.json(resp)
                 })
         }
@@ -160,12 +91,18 @@ class DecodeController {
         const { concatString } = lineup
         const codes = concatString.split('.');
         try {
-            await Promise.all(codes.map((el) => this.decodeDeckstring(el)))
+            await Promise.all(codes.map((el) => DecodeService.decodeDeckstring(el)))
                 .then(resp => res.json(resp))
         }
         catch (e) {
             res.status(422).json({ message: e.message })
         }
+    }
+
+    getCurrentDecks = async (req, res) => {
+        const data = await Deck.findAll({attributes: ['id', 'code']});
+        const updatedDate = await Deck.max('date')
+        return res.json({decks: data, updatedDate})
     }
 }
 
@@ -178,77 +115,6 @@ function firstDuplicateIndex(arr) {
     return -1;
 }
 
-async function parseNumbers(deckstring, lng, classInfo) {
-    try {
-        const base58EncodedValues = deckstring.substr(
-            SW_PREFIX_LEN + CLASS_LEN + VERSION_LEN
-        )
-
-        const bytes = bs58.decode(base58EncodedValues)
-        if (isBigEndian) {
-            bytes.swap16()
-        }
-        const numbers = new Uint16Array(
-            bytes.buffer,
-            bytes.byteOffset,
-            bytes.length / 2
-        )
-        const cards = await Card.findAll({
-            where: {
-                idsw: {
-                    [Op.in]: numbers
-                }
-            },
-            attributes: ['idsw', 'cost'],
-            order: [['cost', 'ASC'], [CardTranslation, 'name', 'ASC']],
-            include: [
-                {
-                    model: CardTranslation,
-                    required: true,
-                    where: {
-                        languageCode: lng
-                    },
-                    attributes: ['name'],
-                },
-                {
-                    model: Prism,
-                    attributes: [],
-                    where: {
-                        [Op.or]: [{ name: classInfo.prism1 }, { name: classInfo.prism2 }],
-                    }
-                }
-            ]
-
-
-        })
-        return [numbers, cards]
-    }
-    catch (e) {
-        return null
-    }
-}
-
-async function parseClass(deckString) {
-    //try {
-    const clazz = deckString.substr(SW_PREFIX_LEN, CLASS_LEN)
-    const info = await ClassInfo.findOne({
-        where: {
-            code: clazz
-        }
-    })
-    return info
-    //}
-    //catch (e) {
-    //    return null
-    //}
-}
-
-function parseVersion(deckString) {
-    const prefix = deckString.substr(0, SW_PREFIX_LEN)
-    if (prefix !== SW_PREFIX) return null
-    const version = deckString.substr(SW_PREFIX_LEN + CLASS_LEN, VERSION_LEN)
-    return version === VERSION ? version : null
-}
 
 
 

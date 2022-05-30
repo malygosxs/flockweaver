@@ -87,6 +87,12 @@ const LineUp = sequelize.define('lineup', {
     concatString: {type: DataTypes.STRING(500)}
 })
 
+const Deck = sequelize.define('deck', {
+    id: {type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true},
+    code: {type: DataTypes.STRING(100)},
+    date: {type: DataTypes.DATEONLY}
+}, {timestamps: false})
+
 User.hasMany(LineUp);
 LineUp.belongsTo(User);
 
@@ -113,5 +119,5 @@ CardTranslation.belongsTo(Card);
 module.exports = {
     Card, Enchant, Expansion, Element, Prism,
     Keyword, CardElement, CardKeyword, CardPrism, CardTranslation,
-    ClassInfo, User, LineUp
+    ClassInfo, User, LineUp, Deck
 }

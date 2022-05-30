@@ -27,8 +27,14 @@
     --color-agility: rgb(28, 73, 10);
     --color-strength: rgb(105, 28, 3);
     --color-wisdom: rgb(117, 7, 93);
-    --color-heart: rgb(12, 19, 9);
+    --color-heart: rgb(14, 14, 14);
     --color-intellect: rgb(22, 37, 102);
+
+    --color-agility-dark: rgb(13, 46, 0);
+    --color-strength-dark: rgb(56, 15, 1);
+    --color-wisdom-dark: rgb(51, 0, 40);
+    --color-heart-dark: rgb(0, 0, 0);
+    --color-intellect-dark: rgb(0, 12, 63);
 
     --decklist-width: 200px;
 }
@@ -117,8 +123,8 @@
     color: #dddddd;
     align-items: center;
     justify-content: center;
-    border: 1px solid #236923;
-    outline: 1px solid #692323;
+    /* border: 1px solid #236923;
+    outline: 1px solid #692323; */
 }
 
 .decklist-card-background {
@@ -219,30 +225,6 @@
     flex-shrink: 1;
 }
 
-.gm-standings-playoff-top {
-    background-color: #55E6C1;
-    color: black;
-}
-
-.gm-standings-playoff {
-    background-color: #58B19F;
-    color: black;
-}
-
-.gm-standings-playoff-bottom {
-    background-color: #9AECDB;
-    color: black;
-}
-
-.gm-standings-boring {
-    background-color: #CAD3C8;
-    color: black;
-}
-
-.gm-standings-relegated {
-    background-color: #FD7272;
-    color: black;
-}
 
 .omni-bar-results {
     position: relative;
