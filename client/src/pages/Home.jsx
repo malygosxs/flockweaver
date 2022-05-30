@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { Helmet } from 'react-helmet';
 import DeckWrapper from '../components/DeckWrapper';
 import { $host } from '../http';
 
@@ -16,7 +17,11 @@ const Home = () => {
     }, [])
 
     return (hasLoaded && <div>
-        <div className='d-flex mt-2 px-4 justify-content-end'>{`Updated at ${date}`}</div>
+        <Helmet>
+                <title>Flockweaver</title>
+                <meta name='description' content='Skyweaver decks, deckviewer and more!'></meta>
+        </Helmet>
+        <div className='d-flex mt-2 px-4 justify-content-end'>{`Recent skyweaver decks. Updated at ${date}`}</div>
         <div className='d-flex flex-wrap justify-content-around m-4'>
             
             {decks.map(deck =>
